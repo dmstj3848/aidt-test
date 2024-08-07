@@ -1,0 +1,462 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 디지털교과서 교사 유형 테스트</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(120deg, #f0f0f0, #e0e0e0);
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        .logo {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100px;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-bar div {
+            height: 10px;
+            background-color: #007BFF;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .question-container {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .question-container.active {
+            display: block;
+            opacity: 1;
+        }
+        h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .options label {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background 0.3s, border 0.3s;
+            font-size: 1em; /* 원래 글꼴 크기로 복원 */
+        }
+        .options label:hover {
+            background: #e0e0e0;
+            border: 1px solid #ccc;
+        }
+        .options input[type="radio"] {
+            display: none;
+        }
+        .options input[type="radio"]:checked + label {
+            background: #007BFF;
+            color: white;
+            border: 1px solid #007BFF;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-size: 1.1em;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            display: none;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .result h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .result p {
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+        .result .note {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #007BFF;
+        }
+        .error {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="o0NxzkzANQ7-24YX5LkqfdTlLHQatwQ1_GYhJfAFTy-gw38oChQ_iRp62dx-wFIK2-PTVKm5qZH2oXu0rBituw.svg" alt="Logo" class="logo">
+    <h1>AI 디지털교과서 <br> 교사 유형 테스트</h1>
+    <div class="progress-bar"><div></div></div>
+    <form id="surveyForm">
+        <!-- Question 1 -->
+        <div class="question-container active" data-question="1">
+            <h3>1. 문제 해결 방법을 선택하세요:</h3>
+            <div class="options">
+                <input type="radio" id="q1a" name="q1" value="a" required>
+                <label for="q1a">데이터를 분석하여 가장 효율적인 해결책을 찾는다.</label>
+                <input type="radio" id="q1b" name="q1" value="b">
+                <label for="q1b">게임이나 퀴즈 형태로 문제를 풀어본다.</label>
+                <input type="radio" id="q1c" name="q1" value="c">
+                <label for="q1c">선생님이나 멘토에게 질문하여 해결책을 찾는다.</label>
+                <input type="radio" id="q1d" name="q1" value="d">
+                <label for="q1d">책이나 인터넷에서 자료를 찾아본다.</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-container" data-question="2">
+            <h3>2. 어떤 수업을 더 선호하나요?</h3>
+            <div class="options">
+                <input type="radio" id="q2a" name="q2" value="a" required>
+                <label for="q2a">성적 향상을 위한 맞춤형 학습</label>
+                <input type="radio" id="q2b" name="q2" value="b">
+                <label for="q2b">인터랙티브 콘텐츠와 활동이 많은 수업</label>
+                <input type="radio" id="q2c" name="q2" value="c">
+                <label for="q2c">언제든지 질문하고 답을 얻을 수 있는 수업</label>
+                <input type="radio" id="q2d" name="q2" value="d">
+                <label for="q2d">다양한 참고 자료와 리소스를 제공하는 수업</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Repeat for all questions -->
+        <!-- Question 3 -->
+        <div class="question-container" data-question="3">
+            <h3>3. 숙제를 할 때 주로 사용하는 방법은?</h3>
+            <div class="options">
+                <input type="radio" id="q3a" name="q3" value="a" required>
+                <label for="q3a">학습 데이터를 분석하여 효율적으로 해결</label>
+                <input type="radio" id="q3b" name="q3" value="b">
+                <label for="q3b">게임이나 퀴즈를 통해 학습 내용 복습</label>
+                <input type="radio" id="q3c" name="q3" value="c">
+                <label for="q3c">선생님이나 친구들에게 도움 요청</label>
+                <input type="radio" id="q3d" name="q3" value="d">
+                <label for="q3d">참고 자료나 인터넷을 활용</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-container" data-question="4">
+            <h3>4. AIDT를 활용할 때 가장 유용한 기능은?</h3>
+            <div class="options">
+                <input type="radio" id="q4a" name="q4" value="a" required>
+                <label for="q4a">개인화된 학습 경로 제공</label>
+                <input type="radio" id="q4b" name="q4" value="b">
+                <label for="q4b">인터랙티브 콘텐츠</label>
+                <input type="radio" id="q4c" name="q4" value="c">
+                <label for="q4c">실시간 질문 응답</label>
+                <input type="radio" id="q4d" name="q4" value="d">
+                <label for="q4d">다양한 학습 자료 제공</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-container" data-question="5">
+            <h3>5. 시험 준비를 어떻게 하나요?</h3>
+            <div class="options">
+                <input type="radio" id="q5a" name="q5" value="a" required>
+                <label for="q5a">데이터 분석을 통해 약한 부분을 보강</label>
+                <input type="radio" id="q5b" name="q5" value="b">
+                <label for="q5b">게임형 학습으로 재미있게 복습</label>
+                <input type="radio" id="q5c" name="q5" value="c">
+                <label for="q5c">선생님이나 멘토의 조언을 받음</label>
+                <input type="radio" id="q5d" name="q5" value="d">
+                <label for="q5d">참고 자료를 통해 꼼꼼히 공부</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-container" data-question="6">
+            <h3>6. 학습 동기 부여를 위해 가장 필요한 것은?</h3>
+            <div class="options">
+                <input type="radio" id="q6a" name="q6" value="a" required>
+                <label for="q6a">데이터 기반의 성과 피드백</label>
+                <input type="radio" id="q6b" name="q6" value="b">
+                <label for="q6b">재미있고 활동적인 학습 방식</label>
+                <input type="radio" id="q6c" name="q6" value="c">
+                <label for="q6c">멘토의 따뜻한 조언과 응원</label>
+                <input type="radio" id="q6d" name="q6" value="d">
+                <label for="q6d">다양한 학습 자료와 정보 제공</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-container" data-question="7">
+            <h3>7. 어려운 문제를 만났을 때 가장 먼저 할 일은?</h3>
+            <div class="options">
+                <input type="radio" id="q7a" name="q7" value="a" required>
+                <label for="q7a">데이터를 통해 문제의 패턴을 분석</label>
+                <input type="radio" id="q7b" name="q7" value="b">
+                <label for="q7b">게임이나 퀴즈를 통해 문제를 풀어봄</label>
+                <input type="radio" id="q7c" name="q7" value="c">
+                <label for="q7c">선생님이나 친구에게 질문</label>
+                <input type="radio" id="q7d" name="q7" value="d">
+                <label for="q7d">자료를 찾아보며 스스로 해결</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-container" data-question="8">
+            <h3>8. 학습 목표를 설정할 때 가장 중요하게 생각하는 것은?</h3>
+            <div class="options">
+                <input type="radio" id="q8a" name="q8" value="a" required>
+                <label for="q8a">데이터 기반의 목표 설정</label>
+                <input type="radio" id="q8b" name="q8" value="b">
+                <label for="q8b">재미있고 활동적인 목표</label>
+                <input type="radio" id="q8c" name="q8" value="c">
+                <label for="q8c">멘토의 조언에 따른 목표</label>
+                <input type="radio" id="q8d" name="q8" value="d">
+                <label for="q8d">참고 자료를 통한 목표 설정</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-container" data-question="9">
+            <h3>9. 학습 과정에서 가장 즐거운 순간은?</h3>
+            <div class="options">
+                <input type="radio" id="q9a" name="q9" value="a" required>
+                <label for="q9a">데이터를 통해 성과를 확인할 때</label>
+                <input type="radio" id="q9b" name="q9" value="b">
+                <label for="q9b">게임이나 퀴즈를 할 때</label>
+                <input type="radio" id="q9c" name="q9" value="c">
+                <label for="q9c">멘토와 상담할 때</label>
+                <input type="radio" id="q9d" name="q9" value="d">
+                <label for="q9d">새로운 자료를 찾을 때</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="button" class="button next-button">다음</button>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-container" data-question="10">
+            <h3>10. AIDT를 처음 사용할 때 가장 기대되는 것은?</h3>
+            <div class="options">
+                <input type="radio" id="q10a" name="q10" value="a" required>
+                <label for="q10a">개인화된 학습 경로</label>
+                <input type="radio" id="q10b" name="q10" value="b">
+                <label for="q10b">인터랙티브 콘텐츠</label>
+                <input type="radio" id="q10c" name="q10" value="c">
+                <label for="q10c">실시간 질문 응답</label>
+                <input type="radio" id="q10d" name="q10" value="d">
+                <label for="q10d">다양한 학습 자료</label>
+            </div>
+            <div class="error">항목을 선택해주세요.</div>
+            <button type="submit" class="button">제출하기</button>
+        </div>
+    </form>
+    <div class="result" id="result">
+        <h2>당신의 유형은: <span id="resultType"></span></h2>
+        <p id="resultDescription"></p>
+        <p class="note">해당 결과를 창비교육 부스에 보여주세요. 하이터치 교사 인증서를 드립니다.</p>
+        <button type="button" class="button" id="restartButton">처음부터 다시 시작하기</button>
+    </div>
+</div>
+
+<script>
+    const totalQuestions = 10;
+    let currentQuestionIndex = 0;
+    
+    document.querySelectorAll('.next-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const currentQuestion = this.closest('.question-container');
+            const nextQuestion = currentQuestion.nextElementSibling;
+            const selectedOption = currentQuestion.querySelector('input[type="radio"]:checked');
+            const error = currentQuestion.querySelector('.error');
+            
+            if (selectedOption) {
+                error.style.display = 'none';
+                if (nextQuestion && nextQuestion.classList.contains('question-container')) {
+                    currentQuestion.classList.remove('active');
+                    nextQuestion.classList.add('active');
+                    currentQuestionIndex++;
+                    updateProgressBar();
+                }
+            } else {
+                error.style.display = 'block';
+            }
+        });
+    });
+
+    document.getElementById('surveyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const answers = {};
+        formData.forEach((value, key) => {
+            answers[key] = value;
+        });
+        
+        // Calculate the result based on answers
+        const result = calculateResult(answers);
+        
+        // Show the result
+        document.getElementById('resultType').textContent = result.type;
+        document.getElementById('resultDescription').innerHTML = result.description.replace(/\n/g, '<br><br>');
+        document.getElementById('result').style.display = 'block';
+        
+        // Update progress bar to 100%
+        currentQuestionIndex = totalQuestions;
+        updateProgressBar();
+        
+        // Change the button to restart
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.style.display = 'none';
+        const restartButton = document.getElementById('restartButton');
+        restartButton.style.display = 'block';
+    });
+
+    document.getElementById('restartButton').addEventListener('click', function() {
+        document.getElementById('result').style.display = 'none';
+        document.querySelector('button[type="submit"]').style.display = 'block';
+        document.getElementById('restartButton').style.display = 'none';
+        document.getElementById('surveyForm').reset();
+        
+        document.querySelectorAll('.question-container').forEach(container => {
+            container.classList.remove('active');
+            container.classList.remove('hidden');
+        });
+        document.querySelector('.question-container[data-question="1"]').classList.add('active');
+        currentQuestionIndex = 0;
+        updateProgressBar();
+    });
+
+    function calculateResult(answers) {
+        const types = {
+            a: {
+                type: '데이터 선생님 (Data Master)',
+                description: `대표 기능: 데이터 분석 및 개인화된 학습 경로 제공
+특징:
+항상 데이터를 분석하고 학생 개개인에게 맞는 학습 계획을 세워주는 선생님
+안경을 끼고 있으며, 항상 노트북을 가지고 다니며 학생들의 학습 데이터를 검토
+학생들에게 맞춤형 피드백을 제공하고, 약한 부분을 집중적으로 보강해줌
+데이터 기반의 성과를 중시하여, 학생들이 스스로 성장하는 것을 도와줌`
+            },
+            b: {
+                type: '인터랙티브 선생님 (Interactive Innovator)',
+                description: `대표 기능: 인터랙티브 콘텐츠 및 게임형 학습 제공
+특징:
+학생들이 즐겁게 학습할 수 있도록 다양한 게임과 인터랙티브 퀴즈를 활용하는 선생님
+밝고 활기찬 성격으로, 항상 새로운 학습 도구와 방법을 연구
+디지털 보드를 사용하여 학생들과 실시간으로 소통하고, 협업 프로젝트를 많이 진행
+창의력과 상상력을 중요시하며, 학생들의 호기심을 자극`
+            },
+            c: {
+                type: '멘토링 선생님 (Mentoring Mentor)',
+                description: `대표 기능: 실시간 질문 응답 및 학습 멘토링
+특징:
+학생들이 언제든지 질문할 수 있는 친근한 멘토형 선생님
+항상 학생들의 곁에서 필요한 도움을 주고, 상담을 통해 학습 방향을 제시
+따뜻하고 이해심이 많으며, 학생 개개인의 고민을 들어줌
+경험이 풍부하여 다양한 학습 방법과 팁을 제공`
+            },
+            d: {
+                type: '리소스 선생님 (Resource Provider)',
+                description: `대표 기능: 다양한 학습 자료 제공 및 참고 자료 관리
+특징:
+풍부한 학습 자료와 참고 문헌을 제공하는 백과사전 같은 선생님
+항상 새로운 자료를 찾고, 학생들에게 필요한 자료를 추천
+자료를 체계적으로 정리하여 쉽게 접근할 수 있도록 해줌
+책을 많이 읽고 지식이 풍부하여, 학생들에게 다양한 정보를 제공`
+            }
+        };
+
+        const counts = {
+            a: 0,
+            b: 0,
+            c: 0,
+            d: 0
+        };
+
+        for (const answer in answers) {
+            counts[answers[answer]] += 1;
+        }
+
+        let maxCount = 0;
+        let resultType = 'a';
+        for (const type in counts) {
+            if (counts[type] > maxCount) {
+                maxCount = counts[type];
+                resultType = type;
+            }
+        }
+
+        return types[resultType];
+    }
+
+    function updateProgressBar() {
+        const progress = (currentQuestionIndex / totalQuestions) * 100;
+        document.querySelector('.progress-bar div').style.width = `${progress}%`;
+    }
+
+    updateProgressBar();
+</script>
+
+</body>
+</html>
